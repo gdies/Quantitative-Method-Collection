@@ -3,15 +3,15 @@ Implementations of statistical and machine learning models
 
 Content
 
-Linear Models - Estimator:
-  - Linear Regression - OLS
+Linear Models - (Estimator):
+  - Linear Regression - (OLS)
   
 Binary Models - Estimator:
-  - Logistic Regression / Logit - MLE
-  - Probit - MLE
+  - Logistic Regression / Logit - (MLE)
+  - Probit - (MLE)
 
 Multinomial Models - Estimator:
-  - Multinomial Regression / Multinomial Logit - MLE
+  - Multinomial Regression / Multinomial Logit - (MLE)
   
 Censored Models - Estimator:
-  - Tobit - MLE
+  - Tobit - (MLE)
