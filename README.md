@@ -6,12 +6,12 @@ Content
 Linear Models - (Estimator):
   - Linear Regression - (OLS)
   
-Binary Models - Estimator:
+Binary Models - (Estimator):
   - Logistic Regression / Logit - (MLE)
   - Probit - (MLE)
 
-Multinomial Models - Estimator:
+Multinomial Models - (Estimator):
   - Multinomial Regression / Multinomial Logit - (MLE)
   
-Censored Models - Estimator:
+Censored Models - (Estimator):
   - Tobit - (MLE)
