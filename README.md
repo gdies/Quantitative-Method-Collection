@@ -17,4 +17,4 @@ Multinomial Models - (Estimator):
   - Multinomial Regression / Multinomial Logit - (MLE)
   
   
-<sup>1</sup>: Cameron, A., & Trivedi, P. (2005). <i>Microeconometrics: Methods and Applications</i>. Cambridge: Cambridge University Press. doi:10.1017/CBO9780511811241
+<sup>1</sup> : Cameron, A., & Trivedi, P. (2005). <i>Microeconometrics: Methods and Applications</i>. Cambridge: Cambridge University Press. doi:10.1017/CBO9780511811241
