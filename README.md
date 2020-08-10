@@ -7,14 +7,14 @@ Linear Models - (Estimator):
   - Linear Regression - (OLS)
   
 Binary Models - (Estimator):
-  - Logit - (MLE) [^fn1]
-  - Probit - (MLE) [^fn1]
-
+  - Logit - (MLE) <sup>1</sup>
+  - Probit - (MLE) <sup>1</sup>
+  
+Censored Models - (Estimator):
+  - Tobit - (MLE) <sup>1</sup>
+  
 Multinomial Models - (Estimator):
   - Multinomial Regression / Multinomial Logit - (MLE)
   
-Censored Models - (Estimator):
-  - Tobit - (MLE) [^fn1]
   
-  
-[^fn1]: Cameron, A., & Trivedi, P. (2005). <i>Microeconometrics: Methods and Applications</i>. Cambridge: Cambridge University Press. doi:10.1017/CBO9780511811241
+<sup>1</sup>: Cameron, A., & Trivedi, P. (2005). <i>Microeconometrics: Methods and Applications</i>. Cambridge: Cambridge University Press. doi:10.1017/CBO9780511811241
