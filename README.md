@@ -11,7 +11,7 @@ Binary Models - (Estimator):
   - Probit - (MLE) <sup>1</sup>
   
 Censored Models - (Estimator):
-  - Tobit - (MLE) <sup>1</sup>,<sup>2</sup>
+  - Tobit - (MLE) <sup>1,2</sup>
   
 Multinomial Models - (Estimator):
   - Multinomial Regression / Multinomial Logit - (MLE)
