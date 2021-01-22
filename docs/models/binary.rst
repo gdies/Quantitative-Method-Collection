@@ -1,5 +1,0 @@
-Binary
-======
-
-.. automodule:: binary
-   :members:

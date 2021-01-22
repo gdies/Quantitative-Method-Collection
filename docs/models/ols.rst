@@ -1,5 +1,0 @@
-OLS
-===
-
-.. automodule:: ols
-   :members:
