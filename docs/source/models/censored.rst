@@ -1,0 +1,5 @@
+Censored
+========
+
+.. automodule:: censored
+   :members:
