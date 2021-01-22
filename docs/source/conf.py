@@ -12,7 +12,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../QMC/')) # add script directory to path
+sys.path.insert(0, os.path.abspath(r'../../QMC/')) # add script directory to path
 
 
 
