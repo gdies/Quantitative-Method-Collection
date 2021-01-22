@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Binary &#8212; Quantitative Method Collection 0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Censored" href="censored.html" />
+    <link rel="prev" title="Models" href="../models.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-binary">
+<span id="binary"></span><h1>Binary<a class="headerlink" href="#module-binary" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="binary.BinaryOutcomeModel">
+<em class="property">class </em><code class="sig-prename descclassname">binary.</code><code class="sig-name descname">BinaryOutcomeModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">add_intercept</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">compute_statistics</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">bootstrap_marginal_effect_variances</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A binary outcome model that Logit and Probit are built on</p>
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.bootstrap">
+<code class="sig-name descname">bootstrap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.bootstrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement bootstrap method for marginal effect variance computation for Logit and Probit
+Bootstrap variance of marginal effects (X (n x k))
+Output: (n x k) - variances for k marginal effects for the n observations</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.compute_marginal_effects">
+<code class="sig-name descname">compute_marginal_effects</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">beta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.compute_marginal_effects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate marginal effects given X and beta</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.compute_statistics">
+<code class="sig-name descname">compute_statistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.compute_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute standard error</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.delta_method">
+<code class="sig-name descname">delta_method</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.delta_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement delta method for marginal effect variance computation for Logit or Probit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit binary model, using the BFGS algorithm for MLE (minimize the negative log-likelihood)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.get_covariance_matrix">
+<code class="sig-name descname">get_covariance_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.get_covariance_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute covariance matrix for the parameters
+The asymptotical variance is the inverse information matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.get_dummy_columns">
+<code class="sig-name descname">get_dummy_columns</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.get_dummy_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>refresh dummy_columns list - tells which column in X is dummy variable, which one is continuous</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.get_marginal_effect_variances">
+<code class="sig-name descname">get_marginal_effect_variances</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.get_marginal_effect_variances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate variance of marginal effects
+X (n x k)
+Output: (n x k) - variances for k marginal effects for the n observations</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.get_marginal_effects">
+<code class="sig-name descname">get_marginal_effects</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">variances</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.get_marginal_effects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate marginal effects
+X (n x k) - must follow the structure of X
+Output: (n x k) - k marginal effects for the n observations</p>
+<blockquote>
+<div><p>variances:  - variances for the (n x k) marginal effects -&gt; return (marginals, var_marginals)</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.information">
+<code class="sig-name descname">information</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement Fisher Information matrix computation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.link_function">
+<code class="sig-name descname">link_function</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.link_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement link function for Logit or Probit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.link_function_derivative">
+<code class="sig-name descname">link_function_derivative</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.link_function_derivative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the derivative link function for Logit or Probit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.objective_function">
+<code class="sig-name descname">objective_function</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">beta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.objective_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>negative log likelihood</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict probability: Pr(y=1|x)
+return y_hat and Pr(y=1|x)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.BinaryOutcomeModel.score">
+<code class="sig-name descname">score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#binary.BinaryOutcomeModel.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement objective function derivative</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="binary.Logit">
+<em class="property">class </em><code class="sig-prename descclassname">binary.</code><code class="sig-name descname">Logit</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.Logit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit logit</p>
+<dl class="py method">
+<dt id="binary.Logit.delta_method">
+<code class="sig-name descname">delta_method</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.Logit.delta_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate variance of marginal effects (X (n x k))
+Output: (n x k) - variances for k marginal effects for the n observations</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.Logit.information">
+<code class="sig-name descname">information</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#binary.Logit.information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Fisher information matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.Logit.link_function">
+<code class="sig-name descname">link_function</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">beta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.Logit.link_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>probit or logit, can be used for prediction, so does not use self.X as default</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.Logit.link_function_derivative">
+<code class="sig-name descname">link_function_derivative</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">beta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.Logit.link_function_derivative" title="Permalink to this definition">¶</a></dt>
+<dd><p>The derivative of the link function</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.Logit.score">
+<code class="sig-name descname">score</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">beta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.Logit.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the first derivative of the objective function at beta</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="binary.Probit">
+<em class="property">class </em><code class="sig-prename descclassname">binary.</code><code class="sig-name descname">Probit</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.Probit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit probit</p>
+<dl class="py method">
+<dt id="binary.Probit.delta_method">
+<code class="sig-name descname">delta_method</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.Probit.delta_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate variance of marginal effects (X (n x k))
+Output: (n x k) - variances for k marginal effects for the n observations</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.Probit.information">
+<code class="sig-name descname">information</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#binary.Probit.information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Fisher information matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.Probit.link_function">
+<code class="sig-name descname">link_function</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">beta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.Probit.link_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>probit -&gt; standard normal distribution, can be used for prediction, so does not use self.X as default</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.Probit.link_function_derivative">
+<code class="sig-name descname">link_function_derivative</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">beta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.Probit.link_function_derivative" title="Permalink to this definition">¶</a></dt>
+<dd><p>The derivative of the link function</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="binary.Probit.score">
+<code class="sig-name descname">score</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">beta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#binary.Probit.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the first derivative of the objective function at beta</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Quantitative Method Collection</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../models.html">Models</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Binary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="censored.html">Censored</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ols.html">OLS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../support_modules.html">Support Modules</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../models.html">Models</a><ul>
+      <li>Previous: <a href="../models.html" title="previous chapter">Models</a></li>
+      <li>Next: <a href="censored.html" title="next chapter">Censored</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, GDIES.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/models/binary.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

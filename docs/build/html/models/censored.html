@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Censored &#8212; Quantitative Method Collection 0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="OLS" href="ols.html" />
+    <link rel="prev" title="Binary" href="binary.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-censored">
+<span id="censored"></span><h1>Censored<a class="headerlink" href="#module-censored" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="censored.Tobit">
+<em class="property">class </em><code class="sig-prename descclassname">censored.</code><code class="sig-name descname">Tobit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">add_intercept</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">compute_statistics</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit" title="Permalink to this definition">¶</a></dt>
+<dd><p>A regression model for censored or truncated variables</p>
+<dl class="py method">
+<dt id="censored.Tobit.bootstrap">
+<code class="sig-name descname">bootstrap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.bootstrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement bootstrap method for marginal effect variance computation for Logit and Probit
+Bootstrap variance of marginal effects (X (n x k))
+Output: (n x k) - variances for k marginal effects for the n observations</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.compute_marginal_effects">
+<code class="sig-name descname">compute_marginal_effects</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">theta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">out</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'latent'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.compute_marginal_effects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate marginal effects given X and theta
+out:</p>
+<blockquote>
+<div><p>‘latent’    : dE[y*|X]/dx
+‘censored’  : dE[y|X]/dx</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.compute_statistics">
+<code class="sig-name descname">compute_statistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.compute_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute standard error</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.delta_method">
+<code class="sig-name descname">delta_method</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.delta_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement delta method for marginal effect variance computation for Logit or Probit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit censored model, using the BFGS algorithm for MLE (minimize the negative log-likelihood)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.get_covariance_matrix">
+<code class="sig-name descname">get_covariance_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cov_type</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'sandwich'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.get_covariance_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute covariance matrix for the parameters
+The asymptotical variance is the inverse information matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.get_dummy_columns">
+<code class="sig-name descname">get_dummy_columns</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.get_dummy_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>refresh dummy_columns list - tells which column in X is dummy variable, which one is continuous</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.get_marginal_effect_variances">
+<code class="sig-name descname">get_marginal_effect_variances</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.get_marginal_effect_variances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate variance of marginal effects
+X (n x k)
+Output: (n x k) - variances for k marginal effects for the n observations</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.get_marginal_effects">
+<code class="sig-name descname">get_marginal_effects</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">variances</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.get_marginal_effects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate marginal effects
+X (n x k) - must follow the structure of X
+Output: (n x k) - k marginal effects for the n observations</p>
+<blockquote>
+<div><p>variances:  - variances for the (n x k) marginal effects -&gt; return (marginals, var_marginals)</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.hessian">
+<code class="sig-name descname">hessian</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.hessian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute and construct hessian at theta,
+the formulae found in Calzolari &amp; Fiorentini 1993</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.information">
+<code class="sig-name descname">information</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement Fisher Information matrix computation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.objective_function">
+<code class="sig-name descname">objective_function</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.objective_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>negative log likelihood
+theta: {beta, sigma}</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.outer_product">
+<code class="sig-name descname">outer_product</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.outer_product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute outer product of gradients at theta
+the formulae found in Calzolari &amp; Fiorentini 1993</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">out</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'latent'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.predict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Predict out:</dt><dd><p>‘latent’        : E[y* | X]
+‘censored’      : E[y | X]
+‘truncated’     : E[y | y&gt;0,X]
+‘P(censored)’   : P(y=0 | X)
+‘P(uncensored)’ : P(y&gt;0 | X)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="censored.Tobit.score">
+<code class="sig-name descname">score</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">theta</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="headerlink" href="#censored.Tobit.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement objective function derivative</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Quantitative Method Collection</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../models.html">Models</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="binary.html">Binary</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Censored</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ols.html">OLS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../support_modules.html">Support Modules</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../models.html">Models</a><ul>
+      <li>Previous: <a href="binary.html" title="previous chapter">Binary</a></li>
+      <li>Next: <a href="ols.html" title="next chapter">OLS</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, GDIES.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/models/censored.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

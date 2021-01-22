@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OLS &#8212; Quantitative Method Collection 0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Support Modules" href="../support_modules.html" />
+    <link rel="prev" title="Censored" href="censored.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-ols">
+<span id="ols"></span><h1>OLS<a class="headerlink" href="#module-ols" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="ols.OLS">
+<em class="property">class </em><code class="sig-prename descclassname">ols.</code><code class="sig-name descname">OLS</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fit_intercept</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_singularity</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ols.OLS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement linear regression, estimated with the OLS method</p>
+<dl class="py method">
+<dt id="ols.OLS.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">compute_statistics</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ols.OLS.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>fit model, X is numpy.ndarray
+y is numpy.ndarray</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ols.OLS.get_R2">
+<code class="sig-name descname">get_R2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">res</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ols.OLS.get_R2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute and return R^2 - coefficient of determination</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ols.OLS.get_covariance_matrix">
+<code class="sig-name descname">get_covariance_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">sigma_2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ols.OLS.get_covariance_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>inputs are all np.ndarray() -s</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ols.OLS.get_p">
+<em class="property">static </em><code class="sig-name descname">get_p</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">sample_size</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">10000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ols.OLS.get_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate p-value, having z-statistics input array</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ols.OLS.get_sigma_2">
+<code class="sig-name descname">get_sigma_2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">res</span></em>, <em class="sig-param"><span class="n">n</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">k</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ols.OLS.get_sigma_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the model is fitted, get sigma^2 (estimate)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ols.OLS.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">add_intercept</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ols.OLS.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict on data, return y_hat
+add_intercept : pick True if training set used intercept</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Quantitative Method Collection</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../models.html">Models</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="binary.html">Binary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="censored.html">Censored</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">OLS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../support_modules.html">Support Modules</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../models.html">Models</a><ul>
+      <li>Previous: <a href="censored.html" title="previous chapter">Censored</a></li>
+      <li>Next: <a href="../support_modules.html" title="next chapter">Support Modules</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, GDIES.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/models/ols.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
