@@ -83,7 +83,7 @@ class BinaryOutcomeModel(object):
         Calculate marginal effects
         X (n x k) - must follow the structure of X
         Output: (n x k) - k marginal effects for the n observations
-            variances:  - variances for the (n x k) marginal effects -> return (marginals, var_marginals)
+        variances:  - variances for the (n x k) marginal effects -> return (marginals, var_marginals)
         """
         marginals = self.compute_marginal_effects(X, self.beta) # (n x k)
         if variances:
