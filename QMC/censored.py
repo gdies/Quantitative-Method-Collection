@@ -7,6 +7,7 @@ import time
 import distributions
 
 
+
 class Tobit(object):
     """
     A regression model for censored or truncated variables
