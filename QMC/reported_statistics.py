@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def get_p(theta:np.ndarray, covariance_matrix:np.ndarray, sample_size:int=10000):
     """
     Calculate p-values for given parameters and their covariance matrix
