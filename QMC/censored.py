@@ -7,7 +7,6 @@ import time
 import distributions
 
 
-
 class Tobit(object):
     """
     A regression model for censored or truncated variables
@@ -118,7 +117,7 @@ class Tobit(object):
         Calculate marginal effects
         X (n x k) - must follow the structure of X
         Output: (n x k) - k marginal effects for the n observations
-            variances:  - variances for the (n x k) marginal effects -> return (marginals, var_marginals)
+        variances:  - variances for the (n x k) marginal effects -> return (marginals, var_marginals)
         """
         marginals = self.compute_marginal_effects(X, self.theta) # (n x k)
         if variances:
@@ -130,8 +129,8 @@ class Tobit(object):
         """
         Calculate marginal effects given X and theta
         out:
-            'latent'    : dE[y*|X]/dx
-            'censored'  : dE[y|X]/dx
+        'latent'    : dE[y*|X]/dx
+        'censored'  : dE[y|X]/dx
         """
         if out == 'latent':
             return theta[0:len(theta)-1] # beta
