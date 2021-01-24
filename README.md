@@ -1,7 +1,7 @@
 # Quantitative-Method-Collection
 Implementations of statistical and machine learning models
 
-Content
+Content - [Documentation](https://quantitative-method-collection.readthedocs.io/en/latest/)
 
 Linear Models - (Estimator):
   - Linear Regression - (OLS)
