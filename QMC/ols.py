@@ -4,7 +4,12 @@ import numpy as np
 # SUPPORT CLASSES
 class OLS(object):
     """
-    Implement linear regression, estimated with the OLS method
+    This class implements linear regression, estimated with the OLS method
+
+    :param fit_intercept: If True, a constant term is added to the linear model.
+    :type fit_intercept: bool, optional, defaults to True
+    :param check_singularity: If True, checks the rank of X'X. Where X is represents the data.
+    :type check_singularity: bool, optional, defaults to True
     """
     def __init__(self, fit_intercept:bool=True, check_singularity:bool=True):
         self.parameters = {'fit_intercept':fit_intercept, 'check_singularity':check_singularity}
@@ -16,8 +21,19 @@ class OLS(object):
 
     def fit(self, X, y, compute_statistics:bool=False):
         """
-        fit model, X is numpy.ndarray
-        y is numpy.ndarray
+        Fit/Estimate model using data X.
+
+        :param X: Input data / Independent Variables, a matrix with (n x k) dimensions.
+        :type X: numpy.ndarray
+        :param y: Dependent / output variable, a vector of (n x 1) dimensions.
+        :type y: numpy.ndarray
+        :param compute_statistics: If True, standard errors and p-values are computed for the point estimates as well as R-squared and adjusted R-squared values for the model.
+        :type compute_statistics: bool, optional, defaults to False
+
+        :raises LinAlgError: If the X'X matrix is singular, it is not invertible, thus the estimation breaks down.
+
+        :return: Only updates the OLS object
+        :rtype: None
         """
         if self.parameters['fit_intercept']:
             X = np.append(X, np.ones(shape=(X.shape[0],1), dtype=np.int8), axis=1)
@@ -43,8 +59,15 @@ class OLS(object):
 
     def predict(self, X, add_intercept:bool=True):
         """
-        Predict on data, return y_hat
-        add_intercept : pick True if training set used intercept
+        Predict output given some input data.
+
+        :param X: Input data (test set) with the same column dimensions as the data used to fit the model (training set).
+        :type X: numpy.ndarray
+        :param add_intercept: If True, an intercept/constant term is added to the data. Pick only if it was uded for the training data as well.
+        :type add_intercept: bool, optional, default to True
+
+        :return: y_hat, prediction of output/dependent variable
+        :rtype: numpy.ndarray
         """
         try:
             X = X.to_numpy()
@@ -57,7 +80,9 @@ class OLS(object):
 
     def get_sigma_2(self, res, n:int, k:int):
         """
-        If the model is fitted, get sigma^2 (estimate)
+        If the model is fitted, get sigma^2 (estimate), that is the variance of the residual terms.
+
+        
         """
         return np.dot(np.transpose(res), res)/(n-k)
 
