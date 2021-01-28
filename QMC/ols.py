@@ -82,26 +82,60 @@ class OLS(object):
         """
         If the model is fitted, get sigma^2 (estimate), that is the variance of the residual terms.
 
-        
+        :param res: The (n x 1) vector of the residual terms of a fitted model.
+        :type res: numpy.ndarray
+        :param n: The first dimension of the fitted data, that is the number of rows.
+        :type n: int
+        :param k: The second dimension of the fitted data, that is the number of columns / independent variables (including the intercept term).
+        :type k: int
+
+        :return: sigma^2 (1 x 1), the variance of the residual terms
+        :rtype: numpy.ndarray
         """
         return np.dot(np.transpose(res), res)/(n-k)
 
     def get_covariance_matrix(self, X, beta, sigma_2):
         """
-        inputs are all np.ndarray() -s
+        This function computes the covariance matrix of the estimated model parameters.
+
+        :param X: Input data (test set) with the same column dimensions as the data used to fit the model (training set).
+        :type X: numpy.ndarray
+        :param beta: Parameter vector (unused).
+        :type beta: numpy.ndarray
+        :param sigma_2: The variance of the residual terms.
+        :type sigma_2: numpy.ndarray
+
+        :return: The (k x k) covariance matrix of the estimated model parameters.
+        :rtype: numpy.ndarray
         """
         return sigma_2*np.linalg.inv((np.dot(np.transpose(X), X)))
 
     @staticmethod
     def get_p(z, sample_size:int=10000):
         """
-        Calculate p-value, having z-statistics input array
+        Calculate p-value for estimated model parameters.
+
+        :param z: z-statistics of the null hypotheses beta_i=0 for i = 0,1,2,...,k
+        :type z: numpy.ndarray
+        :param sample_size: Size of standard normal sample over which the p-values are computed given the z-statistics.
+        :type sample_size: int, optional, defaults to 10000
+
+        :return: p-values for the null hypotheses beta_i=0 for i = 0,1,2,...,k.
+        :rtype: numpy.ndarray
         """
         normal_sample = np.random.normal(loc=0.0, scale=1.0, size=sample_size)
         return np.array([np.where(normal_sample >= np.absolute(i), 1, 0).sum()/sample_size for i in z])
 
     def get_R2(self, y, res):
         """
-        Compute and return R^2 - coefficient of determination
+        Compute and return R^2 - coefficient of determination.
+
+        :param y: The fitted dependent variable (n x 1).
+        :type y: numpy.ndarray
+        :param res: The (n x 1) vector of the residual terms of a fitted model.
+        :type res: numpy.ndarray
+
+        :return: Coefficient of determination - R-squared.
+        :rtype: float
         """
         return 1 - np.sum(res**2)/np.sum(y**2)
