@@ -104,8 +104,7 @@ class BinaryOutcomeModel(object):
         :param variances: If true, compute variances of estimated marginal effects.
         :type variances: bool, optional, defaults to True
 
-        :return: An (n x k) matrix that consists of k marginal effects for the n observations. If the 'variances' parameter is True,
-        the function returns a tuple with the marginal effects and their corresponding variances (marginals, var_marginals).
+        :return: An (n x k) matrix that consists of k marginal effects for the n observations. If the 'variances' parameter is True, the function returns a tuple with the marginal effects and their corresponding variances (marginals, var_marginals).
         :rtype: numpy.ndarray or if 'variances' is True, (numpy.ndarra, numpy.ndarray) tuple.
         """
         marginals = self.compute_marginal_effects(X, self.beta) # (n x k)
