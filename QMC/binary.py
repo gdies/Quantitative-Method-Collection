@@ -9,14 +9,16 @@ import time
 
 class BinaryOutcomeModel(object):
     """
-    A binary outcome model that Logit and Probit are built on
+    A binary outcome model class that Logit and Probit are built on.
+
+    :param add_intercept: If True, an intercept term is added to the model, that is a column of ones in the data.
+    :type add_intercept: bool, optional, defaults to False
+    :param compute_statistics: If True, standard errors and p-values are computed for the point estimates as well as R-squared and adjusted R-squared values for the model.
+    :type compute_statistics: bool, optional, defaults to False
+    :param bootstrap_marginal_effect_variances: If True, the marginal effect variances are bootstrapped, if False, the delta method is used. The delta method is quicker.
+    :type bootstrap_marginal_effect_variances: bool, optional, defaults to False
     """
     def __init__(self, add_intercept:bool=False, compute_statistics:bool=True, bootstrap_marginal_effect_variances:bool=False):
-        """
-        add_intercept       :   add column of ones to data
-        compute_statistics  :   in case the model is not only for prediction
-        bootstrap_marginal_effect_variances : default is using the delta method
-        """
         self.parameters = {'add_intercept':add_intercept, 'compute_statistics':compute_statistics, 'bootstrap_marginal_effect_variances':bootstrap_marginal_effect_variances}
         self.X:np.ndarray = None
         self.y:np.ndarray = None
@@ -27,6 +29,14 @@ class BinaryOutcomeModel(object):
     def fit(self, X:np.ndarray, y:np.ndarray):
         """
         Fit binary model, using the BFGS algorithm for MLE (minimize the negative log-likelihood)
+
+        :param X: Input data / Independent Variables, a matrix with (n x k) dimensions.
+        :type X: numpy.ndarray
+        :param y: Dependent / output variable, a vector of (n x 1) dimensions.
+        :type y: numpy.ndarray
+
+        :return: Only updates the OLS object
+        :rtype: None
         """
         if self.parameters['add_intercept']:
             X = np.append(X, np.ones(shape=(X.shape[0],1), dtype=np.int8), axis=1)
@@ -44,8 +54,13 @@ class BinaryOutcomeModel(object):
 
     def predict(self, X):
         """
-        Predict probability: Pr(y=1|x)
-        return y_hat and Pr(y=1|x)
+        Predict probability: Pr(y=1|X) based on a fitted model.
+
+        :param X: Input data (test set) with the same column dimensions as the data used to fit the model (training set).
+        :type X: numpy.ndarray
+
+        :return: y_hat and Pr(y=1|x)
+        :rtype: tuple
         """
         p = self.link_function(X, self.beta)
         y_hat = np.where(p > 0.5, 1, 0)
@@ -53,7 +68,7 @@ class BinaryOutcomeModel(object):
 
     def get_dummy_columns(self):
         """
-        refresh dummy_columns list - tells which column in X is dummy variable, which one is continuous
+        Refresh dummy_columns list - tells which column in X is dummy variable, which one is continuous
         """
         self.dummy_columns = []
         for i in range(self.X.shape[1]):
@@ -64,7 +79,7 @@ class BinaryOutcomeModel(object):
 
     def compute_statistics(self):
         """
-        Compute standard error
+        Updates covariance matrix and p-values for the estimated parameters of fitted model.
         """
         self.covariance_matrix = self.get_covariance_matrix()
         self.p_values = get_p(self.beta, self.covariance_matrix)
@@ -72,18 +87,26 @@ class BinaryOutcomeModel(object):
 
     def get_covariance_matrix(self):
         """
-        Compute covariance matrix for the parameters
-        The asymptotical variance is the inverse information matrix
+        Compute covariance matrix for the parameters, the asymptotical variance is the inverse information matrix.
+
+        :return: Covariance matrix.
+        :rtype: numpy.ndarray
         """
         self.covariance_matrix = np.linalg.inv(self.information())
         return self.covariance_matrix
 
     def get_marginal_effects(self, X:np.ndarray, variances:bool=True):
         """
-        Calculate marginal effects
-        X (n x k) - must follow the structure of X
-        Output: (n x k) - k marginal effects for the n observations
-        variances:  - variances for the (n x k) marginal effects -> return (marginals, var_marginals)
+        Get marginal effects.
+
+        :param X: The data, an (n x k) matrix.
+        :type X: numpy.ndarray
+        :param variances: If true, compute variances of estimated marginal effects.
+        :type variances: bool, optional, defaults to True
+
+        :return: An (n x k) matrix that consists of k marginal effects for the n observations. If the 'variances' parameter is True,
+        the function returns a tuple with the marginal effects and their corresponding variances (marginals, var_marginals).
+        :rtype: numpy.ndarray or if 'variances' is True, (numpy.ndarra, numpy.ndarray) tuple.
         """
         marginals = self.compute_marginal_effects(X, self.beta) # (n x k)
         if variances:
@@ -93,7 +116,15 @@ class BinaryOutcomeModel(object):
 
     def compute_marginal_effects(self, X:np.ndarray, beta:np.ndarray):
         """
-        Calculate marginal effects given X and beta
+        Calculate marginal effects given X (data) and beta (estimated parameters).
+
+        :param X: The data.
+        :type X: numpy.ndarray
+        :param beta: The model parameter vector (k x 1).
+        :type beta: numpy.ndarray
+
+        :return: Marginal effects dy_i/dx_ij, an (n x k) matrix where a value in i-th row and j-th column is the calculated marginal effect of variable j on observed output i.
+        :rtype: numpy.ndarray
         """
         marginals = []
         for i in range(X.shape[0]): # for each row in X
@@ -111,9 +142,13 @@ class BinaryOutcomeModel(object):
 
     def get_marginal_effect_variances(self, X:np.ndarray):
         """
-        Calculate variance of marginal effects
-        X (n x k)
-        Output: (n x k) - variances for k marginal effects for the n observations
+        Calculate variance of marginal effects.
+
+        :param X: The fitted data, an (n x k) matrix.
+        :type X: numpy.ndarray
+
+        :return: An (n x k) matrix, - variances for k marginal effects for the n observations.
+        :rtype: numpy.ndarray
         """
         if self.parameters['bootstrap_marginal_effect_variances']: # bootsrap method
             variances = self.bootstrap(X) # n x k
@@ -123,9 +158,13 @@ class BinaryOutcomeModel(object):
 
     def bootstrap(self, X:np.ndarray):
         """
-        Implement bootstrap method for marginal effect variance computation for Logit and Probit
-        Bootstrap variance of marginal effects (X (n x k))
-        Output: (n x k) - variances for k marginal effects for the n observations
+        Implement bootstrap method for marginal effect variance computation for Logit and Probit.
+
+        :param X: The fitted data, an (n x k) matrix.
+        :type X: numpy.ndarray
+
+        :return: An (n x k) matrix. Variances for k marginal effects for the n observations.
+        :rtype: numpy.ndarray
         """
         start = time.time()
         # sample coefficients - from their marginal distribution, using the fact that the coefficients are asymptotically normal
@@ -147,38 +186,54 @@ class BinaryOutcomeModel(object):
 # not implemented methods
     def objective_function(self, beta:np.ndarray):
         """
-        negative log likelihood
+        Negative log likelihood.
+
+        :param beta: The model parameter vector (k x 1).
+        :type beta: numpy.ndarray
+
+        :return: The negative log-likelihood function evaluated at X,y,beta.
+        :rtype: float
         """
         link = self.link_function(self.X, beta)
         return - np.sum( self.y*np.log(link) + (1 - self.y)*np.log(1 - link) ) / self.X.shape[0]
 
     def link_function(self):
         """
-        Implement link function for Logit or Probit
+        Implement link function for Logit or Probit.
+
+        :raises NotImplementedError: This method is not implemented in the generic BinaryOutcomeModel.
         """
         raise NotImplementedError('This method must be implemented for the specific binary outcome model')
 
     def link_function_derivative(self):
         """
-        Implement the derivative link function for Logit or Probit
+        Implement the derivative link function for Logit or Probit.
+
+        :raises NotImplementedError: This method is not implemented in the generic BinaryOutcomeModel.
         """
         raise NotImplementedError('This method must be implemented for the specific binary outcome model')
 
     def delta_method(self):
         """
-        Implement delta method for marginal effect variance computation for Logit or Probit
+        Implement delta method for marginal effect variance computation for Logit or Probit.
+
+        :raises NotImplementedError: This method is not implemented in the generic BinaryOutcomeModel.
         """
         raise NotImplementedError('This method must be implemented for the specific binary outcome model')
 
     def score(self):
         """
-        Implement objective function derivative
+        Implement objective function derivative.
+
+        :raises NotImplementedError: This method is not implemented in the generic BinaryOutcomeModel.
         """
         raise NotImplementedError('This method must be implemented for the specific binary outcome model')
 
     def information(self):
         """
-        Implement Fisher Information matrix computation
+        Implement Fisher Information matrix computation.
+
+        :raises NotImplementedError: This method is not implemented in the generic BinaryOutcomeModel.
         """
         raise NotImplementedError('This method must be implemented for the specific binary outcome model')
 
@@ -193,27 +248,52 @@ class Logit(BinaryOutcomeModel):
 
     def link_function(self, X:np.ndarray, beta:np.ndarray):
         """
-        probit or logit, can be used for prediction, so does not use self.X as default
+        The logistic link function.
+
+        :param X: The (n x k) data.
+        :type X: numpy.ndarray
+        :param beta: The model parameter vector (k x 1).
+        :type beta: numpy.ndarray
+
+        :return: The evaluated link function at X,beta.
+        :rtype: numpy.ndarray
         """
         return (np.exp(X @ beta)) / (1 + np.exp(X @ beta)) # logit
 
     def link_function_derivative(self, X:np.ndarray, beta:np.ndarray):
         """
-        The derivative of the link function
+        The derivative of the link function.
+
+        :param X: The (n x k) data.
+        :type X: numpy.ndarray
+        :param beta: The model parameter vector (k x 1).
+        :type beta: numpy.ndarray
+
+        :return: The evaluated link function derivative at X,beta.
+        :rtype: numpy.ndarray
         """
         link = self.link_function(X, beta)
         return link * (1 - link)
 
     def score(self, beta:np.ndarray):
         """
-        Return the first derivative of the objective function at beta
+        The score is the first derivative of the objective function at beta.
+
+        :param beta: The model parameter vector (k x 1).
+        :type beta: numpy.ndarray
+
+        :return: The score.
+        :rtype: float
         """
         res = self.y - self.link_function(self.X, beta)
         return - np.sum( self.X * np.reshape(res, newshape=(res.shape[0], 1)), axis=0 )
 
     def information(self):
         """
-        Compute Fisher information matrix
+        Compute Fisher information matrix.
+
+        :return: The Fisher information matrix.
+        :rtype: numpy.ndarray
         """
         information = np.zeros(shape=(self.X.shape[1], 1))
         for i in range(self.X.shape[0]):
@@ -225,8 +305,13 @@ class Logit(BinaryOutcomeModel):
 
     def delta_method(self, X:np.ndarray):
         """
-        Calculate variance of marginal effects (X (n x k))
-        Output: (n x k) - variances for k marginal effects for the n observations
+        Calculate variance of marginal effects (X (n x k)).
+
+        :param X: The (n x k) data.
+        :type X: numpy.ndarray
+
+        :return: An (n x k) matrix that contains variances for k marginal effects for the n observations.
+        :rtype: numpy.ndarray
         """
         # continuous variables
         link = self.link_function(X, self.beta) # (n x 1)
@@ -259,19 +344,42 @@ class Probit(BinaryOutcomeModel):
 
     def link_function(self, X:np.ndarray, beta:np.ndarray):
         """
-        probit -> standard normal distribution, can be used for prediction, so does not use self.X as default
+        The probit link function.
+
+        :param X: The (n x k) data.
+        :type X: numpy.ndarray
+        :param beta: The model parameter vector (k x 1).
+        :type beta: numpy.ndarray
+
+        :return: The evaluated link function at X,beta.
+        :rtype: numpy.ndarray
         """
+        # probit -> standard normal distribution, can be used for prediction, so does not use self.X as default
         return ((1 + special.erf((X @ beta) / np.sqrt(2))) / 2) # Probit
 
     def link_function_derivative(self, X:np.ndarray, beta:np.ndarray):
         """
-        The derivative of the link function
+        The derivative of the link function.
+
+        :param X: The (n x k) data.
+        :type X: numpy.ndarray
+        :param beta: The model parameter vector (k x 1).
+        :type beta: numpy.ndarray
+
+        :return: The evaluated link function derivative at X,beta.
+        :rtype: numpy.ndarray
         """
         return np.exp(- ((X @ beta)**2) / 2) / np.sqrt(2*np.pi)
 
     def score(self, beta:np.ndarray):
         """
-        Return the first derivative of the objective function at beta
+        The score is the first derivative of the objective function at beta.
+
+        :param beta: The model parameter vector (k x 1).
+        :type beta: numpy.ndarray
+
+        :return: The score.
+        :rtype: float
         """
         link, link_derivative = self.link_function(self.X, beta), self.link_function_derivative(self.X, beta)
         res = self.y - link
@@ -280,7 +388,10 @@ class Probit(BinaryOutcomeModel):
 
     def information(self):
         """
-        Compute Fisher information matrix
+        Compute Fisher information matrix.
+
+        :return: The Fisher information matrix.
+        :rtype: numpy.ndarray
         """
         information = np.zeros(shape=(self.X.shape[1], 1))
         for i in range(self.X.shape[0]):
@@ -292,8 +403,13 @@ class Probit(BinaryOutcomeModel):
 
     def delta_method(self, X:np.ndarray):
         """
-        Calculate variance of marginal effects (X (n x k))
-        Output: (n x k) - variances for k marginal effects for the n observations
+        Calculate variance of marginal effects (X (n x k)).
+
+        :param X: The (n x k) data.
+        :type X: numpy.ndarray
+
+        :return: An (n x k) matrix that contains variances for k marginal effects for the n observations.
+        :rtype: numpy.ndarray
         """
         # continuous variables
         link_derivative = self.link_function_derivative(X, self.beta) # (n x 1)
